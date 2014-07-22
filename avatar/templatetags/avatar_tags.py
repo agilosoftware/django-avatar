@@ -2,7 +2,7 @@ import urllib
 
 from django import template
 from django.utils.translation import ugettext as _
-from django.utils.hashcompat import md5_constructor
+from hashlib import md5
 from django.core.urlresolvers import reverse
 
 from django.contrib.auth.models import User
@@ -26,7 +26,7 @@ def avatar_url(user, size=AVATAR_DEFAULT_SIZE):
             if AVATAR_GRAVATAR_DEFAULT:
                 params['d'] = AVATAR_GRAVATAR_DEFAULT
             return "/avatar/%s/?%s" % (
-                md5_constructor(user.email).hexdigest(),
+                md5(user.email).hexdigest(),
                 urllib.urlencode(params))
         else:
             return get_default_avatar_url()
